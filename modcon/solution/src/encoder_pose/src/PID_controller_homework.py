@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[140]:
 
 
 import numpy as np
@@ -36,8 +36,34 @@ def PIDController(
     
     # TODO: these are random values, you have to implement your own PID controller in here
     omega = np.random.uniform(-8.0, 8.0)
-    e_y = np.random.random()
-    e_int_y = np.random.random()
+    e_y = y_ref - y_hat
+    e_der = (e_y - prev_e_y)/delta_t    
+    e_int_y = prev_int_y + e_y * delta_t
+
+    # anti-windup - preventing the integral error from growing too much
+    e_int_y = max(min(e_int_y,0.06),-0.06)
+    
+    k_p = 0.01
+    k_i = 0.05
+    k_d = 5.0
+    
+    #quite good
+    #k_p = 3
+    #k_i = 0.5
+    #k_d = 10.0
+    
+    #if e_y < 0.01:
+    #    e_y = 0
+    
+    e_y_2 = e_y
+    if (e_y_2 < 0):
+        e_y_2 = -2**(-e_y_2*0.5)-1
+    else:
+        e_y_2 = 2**(e_y_2*0.5)-1
+    
+    #e_y**3 is pretty ood
+    omega = k_p*e_y+k_i*e_int_y+k_d*e_der
+    #print(f'omega={omega}')
     
     return [v_0, omega], e_y, e_int_y
 
