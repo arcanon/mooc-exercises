@@ -9,6 +9,11 @@ RUN pip list
 
 RUN mkdir /code/solution
 
+RUN echo $ROS_DISTRO
+RUN apt update
+RUN apt-get install software-properties-common apt-utils -y
+RUN apt-get install ros-noetic-tf2-geometry-msgs
+
 COPY solution /code/solution
 COPY launchers /code
 

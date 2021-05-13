@@ -9,6 +9,11 @@ COPY assets/vnc/image/root/Documents/. /root/Documents/
 COPY assets/vnc/image/root/icons/. /root/.icons/
 COPY assets/vnc/image/usr/bin/. /usr/bin/
 COPY assets/vnc/image/opt/ros/noetic/share/rviz/. /opt/ros/noetic/share/rviz/
+RUN echo $ROS_DISTRO
+RUN apt update
+RUN apt-get install software-properties-common apt-utils -y
+RUN apt-get install ros-noetic-tf2-geometry-msgs
+#RUN add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo xenial main" -u
 
 
 CMD ["dt-launcher-jupyter"]

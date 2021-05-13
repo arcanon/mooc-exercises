@@ -18,6 +18,7 @@ dt-launchfile-init
 dt-exec roslaunch --wait agent agent_node.launch
 dt-exec roslaunch --wait car_interface all.launch veh:=$VEHICLE_NAME
 dt-exec roslaunch encoder_pose encoder_pose_node.launch veh:=$VEHICLE_NAME
+dt-exec roslaunch orb_slam2_ros orb_slam2_duckie_mono.launch veh:=$VEHICLE_NAME
 
 # ----------------------------------------------------------------------------
 # YOUR CODE ABOVE THIS LINE
