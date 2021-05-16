@@ -39,7 +39,7 @@ class LaneServoingNode(DTROS):
         self.veh = rospy.get_namespace().strip("/")
 
         # The following are used for the Braitenberg exercise
-        self.v_0 = 0.15  # Forward velocity command
+        self.v_0 = 0.30  # Forward velocity command
 
         # The following are used for scaling
         self.steer_max = -1
@@ -223,6 +223,12 @@ class LaneServoingNode(DTROS):
         # now rescale from 0 to 1
         steer_scaled = np.sign(steer) * \
                        rescale(min(np.abs(steer), self.steer_max), 0, self.steer_max)
+
+        try:
+            self.v_0 = float(rospy.get_param('/v_factor'))
+            print(self.v_0)
+        except:
+            print("error with v_factor")
 
         u = [self.v_0, steer_scaled * self.omega_max]
         self.publish_command(u)
