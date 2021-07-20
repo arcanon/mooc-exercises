@@ -11,6 +11,8 @@ catkin_ws/.catkin_tools/
 */assets/setup/challenges/challenge-evaluation-output
 */assets/setup/challenges/challenge-results
 */assets/setup/challenges/tmp
+duckietown_dataset/
+*/solution/nn_models/ultralytics_yolov5_master
 *resolved
 .ipynb_checkpoints
 *-filtered*
