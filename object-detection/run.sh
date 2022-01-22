@@ -1,0 +1,1 @@
+dts exercises test --sim --scenarios assets/test_scenarios

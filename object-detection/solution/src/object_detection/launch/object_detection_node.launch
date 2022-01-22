@@ -5,6 +5,12 @@
 	<arg name="pkg_name" default="object_detection" doc="name of the package"/>
 	<arg name="node_name" default="object_detection_node" doc="name of the node"/>
 
+    
+    <node ns="$(arg veh)"  pkg="$(arg pkg_name)" type="get_sim_data.py" name="sim_data" output="screen" required="false">
+    </node>
+    
+    
+
     <node ns="$(arg veh)"  pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen" required="true">
         <rosparam command="load" file="$(find object_detection)/config/$(arg node_name)/$(arg param_file_name).yaml"/>
         <param name="AIDO_eval" value="$(arg AIDO_eval)"/>

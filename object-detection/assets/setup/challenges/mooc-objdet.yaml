@@ -68,8 +68,8 @@ steps:
 
           environment:
             experiment_manager_parameters:
-              episodes_per_scenario: 3
-              episode_length_s: 60.0
+              episodes_per_scenario: 1
+              episode_length_s: 36000.0
               min_episode_length_s: 0.0
               seed: 20200922
               physics_dt: 0.05
@@ -79,8 +79,8 @@ steps:
               sim_out: /fifos/simulator-out
               sm_in: /fifos/scenario_maker-in
               sm_out: /fifos/scenario_maker-out
-              timeout_initialization: 120
-              timeout_regular: 120
+              timeout_initialization: 12000
+              timeout_regular: 12000
 
               port: 10123 # visualization port
               scenarios:

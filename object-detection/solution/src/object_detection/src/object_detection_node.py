@@ -11,6 +11,7 @@ from object_detection.model import Wrapper
 from cv_bridge import CvBridge
 from integration import NUMBER_FRAMES_SKIPPED, filter_by_classes, filter_by_bboxes, filter_by_scores
 
+
 class ObjectDetectionNode(DTROS):
 
     def __init__(self, node_name):
@@ -59,13 +60,14 @@ class ObjectDetectionNode(DTROS):
         self.bridge = CvBridge()
 
         model_file = rospy.get_param('~model_file','.')
+        #self.v = rospy.get_param('~speed',0.001)
         self.v = rospy.get_param('~speed',0.4)
         self.veh = rospy.get_namespace().strip("/")
         aido_eval = rospy.get_param("~AIDO_eval", False)
         self.log(f"AIDO EVAL VAR: {aido_eval}")
         self.log("Starting model loading!")
         self._debug = rospy.get_param("~debug", False)
-        self.model_wrapper = Wrapper(aido_eval)
+        #self.model_wrapper = Wrapper(aido_eval)
         self.log("Finished model loading!")
         self.frame_id = 0
         self.first_image_received = False
@@ -77,6 +79,17 @@ class ObjectDetectionNode(DTROS):
         self.pub_car_commands(True , msg.header)
 
     def image_cb(self, image_msg):
+        # Decode from compressed image with OpenCV
+        try:
+            image = self.bridge.compressed_imgmsg_to_cv2(image_msg)
+        except ValueError as e:
+            self.logerr('Could not decode image: %s' % e)
+            return
+        #imageFile = f'/code/solution/src/object_detection/src/sim5/cam0/data/{image_msg.header.stamp}.png'
+        #print(f"writing {imageFile}")
+        #cv2.imwrite(imageFile, cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        self.pub_car_commands(False, image_msg.header)
+        return
         if not self.initialized:
             self.pub_car_commands(True, image_msg.header)
             return
@@ -147,7 +160,10 @@ class ObjectDetectionNode(DTROS):
         if stop:
             car_control_msg.v = 0.0
         else:
+            #car_control_msg.v = 0.04 #self.v
             car_control_msg.v = self.v
+
+        #car_control_msg.v = 0.0
 
         # always drive straight
         car_control_msg.omega = 0.0

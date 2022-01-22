@@ -1,0 +1,6 @@
+[submodule "object-detection/solution/src/orb_slam3_ros_wrapper"]
+	path = object-detection/solution/src/orb_slam3_ros_wrapper
+	url = https://github.com/thien94/orb_slam3_ros_wrapper.git
+[submodule "object-detection/solution/ORB_SLAM3"]
+	path = object-detection/solution/ORB_SLAM3
+	url = https://github.com/UZ-SLAMLab/ORB_SLAM3.git
